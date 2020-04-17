@@ -89,6 +89,9 @@ func (c *claptrap) clap(event *event) {
 	}
 
 	// for sake of tests
+
+	log.Printf("%d", atomic.LoadUint32(&c.clapMustStop))
+
 	if c.testchan != nil && atomic.LoadUint32(&c.clapMustStop) == 0 {
 		c.testchan <- [3]string{action, event.name, timestamp}
 	}

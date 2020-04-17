@@ -72,9 +72,13 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 
 	log.Println("6")
 	witness := make(chan struct{})
+	log.Println("6.1")
 	triggerWrite <- witness
+	log.Println("6.2")
 	<-witness
+	log.Println("6.4")
 	close(triggerWrite)
+	log.Println("6.5")
 	processResult("CREATE", "testdata/bigfile", ch, t)
 
 	log.Println("7")

@@ -6,13 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      GOPATH: ${{ github.workspace }}
+      GOPATH: /go
       CI: on
       GO111MODULE: on
     steps:
     - uses: actions/checkout@v2
       with:
-        path: $GOPATH/src/github.com/${{ github.repository }}
+        path: /go/src/github.com/${{ github.repository }}
     - uses: actions/setup-go@v1
       with:
         go-version: '1.14'    

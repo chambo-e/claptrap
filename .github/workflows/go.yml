@@ -8,6 +8,7 @@ jobs:
     env:
       GOPATH: ${{ github.workspace }}
       CI: on
+      GO111MODULE: on
     steps:
     - uses: actions/checkout@v2
       with:

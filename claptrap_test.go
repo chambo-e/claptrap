@@ -8,15 +8,8 @@ import (
 )
 
 var (
-	gopath       = os.Getenv("GOPATH")
 	testDataPath = "./testdata"
 )
-
-func init() {
-	if len(gopath) == 0 {
-		panic("$GOPATH not set")
-	}
-}
 
 func TestClaptrapInstanciationShouldFail(t *testing.T) {
 	if _, err := newClaptrap("invalid", nil); err == nil {

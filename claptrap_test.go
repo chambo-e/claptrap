@@ -140,15 +140,19 @@ func TestMain(m *testing.M) {
 }
 
 func processResult(expectedAction, expectedTarget string, ch chan [3]string, t *testing.T) {
+	log.Println("a")
 	result := <-ch
+	log.Println("b")
 	action, target, timestamp := result[0], result[1], result[2]
 
+	log.Println("c")
 	if len(timestamp) == 0 {
 		t.Log("timestamp should not be empty")
 		t.Fail()
 		return
 	}
 
+	log.Println("d")
 	if action != expectedAction || target != expectedTarget {
 		t.Logf("event caught should be '%s' and target '%s' but got: [%s|%s] ",
 			expectedAction, expectedTarget, action, target)

@@ -163,12 +163,14 @@ func processResult(expectedAction, expectedTarget string, ch chan [3]string, t *
 
 func writeBigFile(path, content string, errchan chan error) {
 	var f *os.File
+	log.Println("A0")
 	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		errchan <- err
 		return
 	}
 
+	log.Println("AA")
 	for i := 0; i < runtime.NumCPU()*1000; i++ {
 		if _, err := f.WriteString(content); err != nil {
 			errchan <- err
@@ -176,11 +178,13 @@ func writeBigFile(path, content string, errchan chan error) {
 		}
 	}
 
+	log.Println("AB")
 	if err := f.Sync(); err != nil {
 		errchan <- err
 		return
 	}
 
+	log.Println("AC")
 	if err := f.Close(); err != nil {
 		errchan <- err
 		return

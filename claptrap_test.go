@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	onCI         = len(os.Getenv("CI")) > 0
 	gopath       = os.Getenv("GOPATH")
 	testDataPath = "./testdata"
 )
@@ -16,10 +15,6 @@ var (
 func init() {
 	if len(gopath) == 0 {
 		panic("$GOPATH not set")
-	}
-
-	if onCI {
-		testDataPath = os.Getenv("GOPATH") + "/src/github.com/TommyStarK/claptrap/testdata"
 	}
 }
 

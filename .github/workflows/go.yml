@@ -6,7 +6,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container: golang:1.14
-    env:
     steps:
     - uses: actions/checkout@v2
     - run: pwd

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	"runtime"
 	"syscall"
@@ -28,7 +29,11 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 	c.testMode = true
 	c.testchan = ch
 
+	log.Println("1")
+
 	go c.trap()
+
+	log.Println("2")
 
 	triggerWrite := make(chan chan struct{})
 	go func() {
@@ -38,6 +43,7 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 		return
 	}()
 
+	log.Println("3")
 	triggerUpdate := make(chan chan struct{})
 	go func() {
 		updateDone := <-triggerUpdate
@@ -46,6 +52,7 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 		return
 	}()
 
+	log.Println("4")
 	triggerRename := make(chan chan struct{})
 	go func() {
 		renameDone := <-triggerRename
@@ -54,6 +61,7 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 		return
 	}()
 
+	log.Println("5")
 	triggerRemove := make(chan chan struct{})
 	go func() {
 		removeDone := <-triggerRemove
@@ -62,29 +70,35 @@ func TestClaptrapBehaviorOnLargeFile(t *testing.T) {
 		return
 	}()
 
+	log.Println("6")
 	witness := make(chan struct{})
 	triggerWrite <- witness
 	<-witness
 	close(triggerWrite)
 	processResult("CREATE", "testdata/bigfile", ch, t)
 
+	log.Println("7")
 	triggerUpdate <- witness
 	<-witness
 	close(triggerUpdate)
 	processResult("UPDATE", "testdata/bigfile", ch, t)
 
+	log.Println("8")
 	triggerRename <- witness
 	<-witness
 	close(triggerRename)
 	processResult("RENAME", "testdata/bigfile", ch, t)
 
+	log.Println("9")
 	triggerRemove <- witness
 	<-witness
 	close(triggerRemove)
 	processResult("REMOVE", "testdata/bigf", ch, t)
 
+	log.Println("10")
 	c.sigchan <- os.Signal(syscall.SIGTERM)
 
+	log.Println("11")
 	close(ch)
 	close(witness)
 }
